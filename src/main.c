@@ -4,6 +4,7 @@
 	Written By: Ryan Smith
 */
 #include <stdio.h>
+#define GLFW_INCLUDE_VULKAN
 #include "GLFW/glfw3.h"
 
 #define WIDTH 1920
@@ -20,6 +21,15 @@ int main(int argc, char** argv)
 		fprintf(stderr, "Unable to init GLFW.\n");
 		return 1;
 	}
+
+	// GLFW: Vulkan
+	if (!glfwVulkanSupported())
+	{
+		fprintf(stderr, "Vulkan is not supported");
+		return 1;
+	}
+	PFN_vkCreateInstance pfnCreateInstance = (PFN_vkCreateInstance)
+    glfwGetInstanceProcAddress(NULL, "vkCreateInstance");
 
 	// GLFW: Create Window
 	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan", NULL, NULL);
